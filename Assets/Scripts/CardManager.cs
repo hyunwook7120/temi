@@ -4,23 +4,23 @@ public class CardManager : MonoBehaviour
 {
     public static CardManager Instance { get; private set; }
 
-    public GameObject[] cardPrefabs; // ¸ðµç Ä«µå ÇÁ¸®ÆÕÀ» ¹è¿­·Î ÀúÀå (1ºÎÅÍ 10±îÁö)
+    public GameObject[] cardPrefabs; // ëª¨ë“  ì¹´ë“œ í”„ë¦¬íŒ¹ì„ ë°°ì—´ë¡œ ì €ìž¥ (1ë¶€í„° 10ê¹Œì§€)
 
     private void Awake()
     {
-        // ½Ì±ÛÅæ ÆÐÅÏ Àû¿ë
+        // ì‹±ê¸€í†¤ íŒ¨í„´ ì ìš©
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾À ÀüÈ¯ ½Ã ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ì”¬ ì „í™˜ ì‹œ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
         }
         else
         {
-            Destroy(gameObject); // Áßº¹µÈ ÀÎ½ºÅÏ½º ÆÄ±«
+            Destroy(gameObject); // ì¤‘ë³µëœ ì¸ìŠ¤í„´ìŠ¤ íŒŒê´´
         }
     }
 
-    // Ä«µå ÇÁ¸®ÆÕÀ» Ã£´Â ¸Þ¼­µå
+    // ì¹´ë“œ í”„ë¦¬íŒ¹ì„ ì°¾ëŠ” ë©”ì„œë“œ
     public GameObject GetCardPrefab(int value)
     {
         if (value >= 1 && value <= cardPrefabs.Length)

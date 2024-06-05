@@ -2,30 +2,30 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public int value; // Ä«µåÀÇ °ª
+    public int value; // ì¹´ë“œì˜ ê°’
 
     private SpriteRenderer spriteRenderer;
 
     private void Awake()
     {
-        // ½ºÇÁ¶óÀÌÆ® ·»´õ·¯ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
+        // ìŠ¤í”„ë¼ì´íŠ¸ ë Œë”ëŸ¬ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        // ½ºÇÁ¶óÀÌÆ® ·»´õ·¯°¡ ¾øÀ¸¸é ¿¡·¯ ·Î±×¸¦ Ãâ·ÂÇÕ´Ï´Ù.
+        // ìŠ¤í”„ë¼ì´íŠ¸ ë Œë”ëŸ¬ê°€ ì—†ìœ¼ë©´ ì—ëŸ¬ ë¡œê·¸ë¥¼ ì¶œë ¥í•©ë‹ˆë‹¤.
         if (spriteRenderer == null)
         {
             Debug.LogError("SpriteRenderer component is missing on " + gameObject.name);
         }
     }
 
-    // Ä«µå ÃÊ±âÈ­ ¸Ş¼­µå
+    // ì¹´ë“œ ì´ˆê¸°í™” ë©”ì„œë“œ
     public void Initialize(int cardValue)
     {
         value = cardValue;
         UpdateCardSprite();
     }
 
-    // Ä«µå ½ºÇÁ¶óÀÌÆ® ¾÷µ¥ÀÌÆ® ¸Ş¼­µå
+    // ì¹´ë“œ ìŠ¤í”„ë¼ì´íŠ¸ ì—…ë°ì´íŠ¸ ë©”ì„œë“œ
     private void UpdateCardSprite()
     {
         if (spriteRenderer != null)

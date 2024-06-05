@@ -8,13 +8,13 @@ public class GameManager : MonoBehaviour
     private int currentPlayerIndex;
     private int currentBet;
 
-    // °ÔÀÓ ½ÃÀÛ
+    // ê²Œì„ ì‹œì‘
     void Start()
     {
         InitializeGame();
     }
 
-    // °ÔÀÓ ÃÊ±âÈ­
+    // ê²Œì„ ì´ˆê¸°í™”
     private void InitializeGame()
     {
         dealer.InitializeDeck();
@@ -31,30 +31,30 @@ public class GameManager : MonoBehaviour
         SetPlayerTurn();
     }
 
-    // ÇÃ·¹ÀÌ¾î ÅÏ ¼³Á¤
+    // í”Œë ˆì´ì–´ í„´ ì„¤ì •
     private void SetPlayerTurn()
     {
         uiManager.SetButtonCallbacks(() => Bet(currentPlayerIndex), () => Pass(currentPlayerIndex));
     }
 
-    // º£ÆÃ ·ÎÁ÷
+    // ë² íŒ… ë¡œì§
     public void Bet(int playerID)
     {
-        // º£ÆÃ ·ÎÁ÷ ±¸Çö
-        currentBet++; // ¿¹½Ã·Î º£ÆÃ ±İ¾×À» Áõ°¡½ÃÅ´
+        // ë² íŒ… ë¡œì§ êµ¬í˜„
+        currentBet++; // ì˜ˆì‹œë¡œ ë² íŒ… ê¸ˆì•¡ì„ ì¦ê°€ì‹œí‚´
         players[playerID].UpdateScore(currentBet);
         uiManager.UpdateScoreUI(playerID, players[playerID].score);
         NextTurn();
     }
 
-    // ÆĞ½º ·ÎÁ÷
+    // íŒ¨ìŠ¤ ë¡œì§
     public void Pass(int playerID)
     {
         players[playerID].Pass();
         NextTurn();
     }
 
-    // ´ÙÀ½ ÅÏ ÁøÇà
+    // ë‹¤ìŒ í„´ ì§„í–‰
     private void NextTurn()
     {
         do
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         CheckGameEnd();
     }
 
-    // °ÔÀÓ Á¾·á Ã¼Å©
+    // ê²Œì„ ì¢…ë£Œ ì²´í¬
     private void CheckGameEnd()
     {
         int activePlayers = 0;
@@ -87,10 +87,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ½ÂÀÚ °áÁ¤
+    // ìŠ¹ì ê²°ì •
     private void DeclareWinner(Player winner)
     {
         Debug.Log("The winner is Player " + winner.playerID + " with a score of " + winner.score);
-        // °ÔÀÓ Á¾·á UI ¾÷µ¥ÀÌÆ® ·ÎÁ÷ Ãß°¡ °¡´É
+        // ê²Œì„ ì¢…ë£Œ UI ì—…ë°ì´íŠ¸ ë¡œì§ ì¶”ê°€ ê°€ëŠ¥
     }
 }

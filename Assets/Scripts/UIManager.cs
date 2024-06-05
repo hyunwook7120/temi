@@ -1,16 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI; // Button°ú Image¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¿ä
-using TMPro; // TextMeshProUGUI¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¿ä
+using UnityEngine.UI; // Buttonê³¼ Imageë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìš”
+using TMPro; // TextMeshProUGUIë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìš”
 using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
-    public Image[] playerCards; // °¢ ÇÃ·¹ÀÌ¾îÀÇ Ä«µå Image ¹è¿­
-    public TextMeshProUGUI[] playerScores; // °¢ ÇÃ·¹ÀÌ¾îÀÇ Á¡¼ö TextMeshProUGUI ¹è¿­
+    public Image[] playerCards; // ê° í”Œë ˆì´ì–´ì˜ ì¹´ë“œ Image ë°°ì—´
+    public TextMeshProUGUI[] playerScores; // ê° í”Œë ˆì´ì–´ì˜ ì ìˆ˜ TextMeshProUGUI ë°°ì—´
     public Button betButton;
     public Button passButton;
 
-    // ÇÃ·¹ÀÌ¾î Ä«µå UI ¾÷µ¥ÀÌÆ®
+    // í”Œë ˆì´ì–´ ì¹´ë“œ UI ì—…ë°ì´íŠ¸
     public void UpdatePlayerCardUI(int playerID, Card card)
     {
         if (playerID < playerCards.Length && playerCards[playerID] != null)
@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Á¡¼ö UI ¾÷µ¥ÀÌÆ®
+    // ì ìˆ˜ UI ì—…ë°ì´íŠ¸
     public void UpdateScoreUI(int playerID, int score)
     {
         if (playerID < playerScores.Length && playerScores[playerID] != null)
@@ -28,7 +28,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // º£ÆÃ ¹× ÆĞ½º ¹öÆ° ¼³Á¤
+    // ë² íŒ… ë° íŒ¨ìŠ¤ ë²„íŠ¼ ì„¤ì •
     public void SetButtonCallbacks(UnityAction betAction, UnityAction passAction)
     {
         betButton.onClick.RemoveAllListeners();
