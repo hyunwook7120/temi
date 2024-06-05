@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public bool hasPassed;
     public Card card;
 
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     public void Initialize(int id)
     {
         playerID = id;
@@ -15,20 +15,20 @@ public class Player : MonoBehaviour
         hasPassed = false;
     }
 
-    // Ä«µå ¼³Á¤
+    // ì¹´ë“œ ì„¤ì •
     public void SetCard(Card newCard)
     {
         card = newCard;
         card.gameObject.SetActive(true);
     }
 
-    // Á¡¼ö ¾÷µ¥ÀÌÆ®
+    // ì ìˆ˜ ì—…ë°ì´íŠ¸
     public void UpdateScore(int points)
     {
         score += points;
     }
 
-    // ÆĞ½º »óÅÂ ¼³Á¤
+    // íŒ¨ìŠ¤ ìƒíƒœ ì„¤ì •
     public void Pass()
     {
         hasPassed = true;

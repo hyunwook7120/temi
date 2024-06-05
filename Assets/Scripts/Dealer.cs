@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class Dealer : MonoBehaviour
 {
     private List<Card> deck = new List<Card>();
-    public IReadOnlyList<Card> Deck => deck.AsReadOnly(); // ÀĞ±â Àü¿ëÀ¸·Î µ¦ Á¦°ø
+    public IReadOnlyList<Card> Deck => deck.AsReadOnly(); // ì½ê¸° ì „ìš©ìœ¼ë¡œ ë± ì œê³µ
 
-    // µ¦ ÃÊ±âÈ­
+    // ë± ì´ˆê¸°í™”
     public void InitializeDeck()
     {
         for (int j = 1; j <= 10; j++)
@@ -27,7 +27,7 @@ public class Dealer : MonoBehaviour
         ShuffleDeck();
     }
 
-    // µ¦ ¼ÅÇÃ ¸Ş¼­µå
+    // ë± ì…”í”Œ ë©”ì„œë“œ
     private void ShuffleDeck()
     {
         for (int i = deck.Count - 1; i > 0; i--)
@@ -39,7 +39,7 @@ public class Dealer : MonoBehaviour
         }
     }
 
-    // Ä«µå ¹èºĞ ¸Ş¼­µå
+    // ì¹´ë“œ ë°°ë¶„ ë©”ì„œë“œ
     public Card DealCard()
     {
         if (deck.Count == 0) return null;
