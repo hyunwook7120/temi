@@ -8,8 +8,12 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     private int currentPlayerIndex;
     private int currentBet;
+<<<<<<< HEAD
     private bool isGameActive;
     
+=======
+
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
     // 게임 시작
     void Start()
     {
@@ -49,10 +53,16 @@ public class GameManager : MonoBehaviour
     // 베팅 로직
     public void Bet(int playerID)
     {
+<<<<<<< HEAD
         if (!isGameActive) return;
         currentBet++;
         // 베팅한 플레이어의 점수만 변경하는 대신 모든 플레이어의 점수를 업데이트
         players[playerID].UpdateScore(currentBet); // 베팅한 플레이어의 점수만 증가
+=======
+        // 베팅 로직 구현
+        currentBet++; // 예시로 베팅 금액을 증가시킴
+        players[playerID].UpdateScore(currentBet);
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
         uiManager.UpdateScoreUI(playerID, players[playerID].score);
         NextTurn();
     }
@@ -123,6 +133,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     private Player FindWinner()
     {
         // 가장 높은 점수를 가진 플레이어를 승자로 결정
@@ -139,11 +150,14 @@ public class GameManager : MonoBehaviour
         return winner;
     }
     
+=======
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
     // 승자 결정
     private void DeclareWinner(Player winner)
     {
         isGameActive = false;
         Debug.Log("The winner is Player " + winner.playerID + " with a score of " + winner.score);
+<<<<<<< HEAD
         UpdateUIForWinner(winner);
         DisableGameplayElements();
         EndGame();
@@ -169,4 +183,8 @@ public class GameManager : MonoBehaviour
         Application.Quit();
         #endif
     }
+=======
+        // 게임 종료 UI 업데이트 로직 추가 가능
+    }
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
 }
