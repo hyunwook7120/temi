@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,19 +8,27 @@ public class GameManager : MonoBehaviour
     public UIManager uiManager;
     private int currentPlayerIndex;
     private int currentBet;
-
-    // °ÔÀÓ ½ÃÀÛ
+    private bool isGameActive;
+    
+    // ê²Œì„ ì‹œì‘
     void Start()
     {
+         if (CardManager.Instance == null)
+        {
+            Debug.LogError("CardManager is not initialized.");
+            return; // CardManagerê°€ ì¤€ë¹„ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ì´ˆê¸°í™” ì¤‘ë‹¨
+        }
         InitializeGame();
     }
 
-    // °ÔÀÓ ÃÊ±âÈ­
+    // ê²Œì„ ì´ˆê¸°í™”
     private void InitializeGame()
     {
         dealer.InitializeDeck();
+        dealer.ShuffleDeck();
         currentBet = 0;
         currentPlayerIndex = 0;
+        isGameActive = true;  // ê²Œì„ì„ í™œì„±í™” ìƒíƒœë¡œ ì„¤ì •
         for (int i = 0; i < players.Length; i++)
         {
             players[i].Initialize(i);
@@ -31,45 +40,72 @@ public class GameManager : MonoBehaviour
         SetPlayerTurn();
     }
 
-    // ÇÃ·¹ÀÌ¾î ÅÏ ¼³Á¤
+    // í”Œë ˆì´ì–´ í„´ ì„¤ì •
     private void SetPlayerTurn()
     {
         uiManager.SetButtonCallbacks(() => Bet(currentPlayerIndex), () => Pass(currentPlayerIndex));
     }
 
-    // º£ÆÃ ·ÎÁ÷
+    // ë² íŒ… ë¡œì§
     public void Bet(int playerID)
     {
-        // º£ÆÃ ·ÎÁ÷ ±¸Çö
-        currentBet++; // ¿¹½Ã·Î º£ÆÃ ±İ¾×À» Áõ°¡½ÃÅ´
-        players[playerID].UpdateScore(currentBet);
+        if (!isGameActive) return;
+        currentBet++;
+        // ë² íŒ…í•œ í”Œë ˆì´ì–´ì˜ ì ìˆ˜ë§Œ ë³€ê²½í•˜ëŠ” ëŒ€ì‹  ëª¨ë“  í”Œë ˆì´ì–´ì˜ ì ìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
+        players[playerID].UpdateScore(currentBet); // ë² íŒ…í•œ í”Œë ˆì´ì–´ì˜ ì ìˆ˜ë§Œ ì¦ê°€
         uiManager.UpdateScoreUI(playerID, players[playerID].score);
         NextTurn();
     }
 
-    // ÆĞ½º ·ÎÁ÷
+    // íŒ¨ìŠ¤ ë¡œì§
     public void Pass(int playerID)
     {
+        if (!isGameActive) return;
         players[playerID].Pass();
+        Card newCard = dealer.DealCard();
+        if (newCard != null)
+        {
+            players[playerID].SetCard(newCard);
+            uiManager.UpdatePlayerCardUI(playerID, newCard);
+        }   
+        else
+        {
+            Debug.LogError("No more cards to deal.");
+        }
         NextTurn();
     }
 
-    // ´ÙÀ½ ÅÏ ÁøÇà
+    // ë‹¤ìŒ í„´ ì§„í–‰
     private void NextTurn()
     {
-        do
+        currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
+        int activePlayers = 0;  // ë³€ìˆ˜ ì„ ì–¸ê³¼ ì´ˆê¸°í™”
+        foreach (Player player in players)
         {
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.Length;
-        } while (players[currentPlayerIndex].hasPassed);
+            if (!player.hasPassed)
+            {
+                activePlayers++;
+            }
+        }
 
-        SetPlayerTurn();
-        CheckGameEnd();
+        if (activePlayers == 0)  // ëª¨ë“  í”Œë ˆì´ì–´ê°€ íŒ¨ìŠ¤í–ˆì„ ê²½ìš° ê²Œì„ ì¢…ë£Œ
+        {
+            Player winner = FindWinner();
+            if (winner != null)
+            {
+                DeclareWinner(winner);
+            }
+        }
+        else
+        {
+            SetPlayerTurn();
+        }
     }
 
-    // °ÔÀÓ Á¾·á Ã¼Å©
+    // ê²Œì„ ì¢…ë£Œ ì²´í¬
     private void CheckGameEnd()
     {
-        int activePlayers = 0;
+         int activePlayers = 0; // ë³€ìˆ˜ ì„ ì–¸ê³¼ ì´ˆê¸°í™”
         Player potentialWinner = null;
 
         foreach (Player player in players)
@@ -87,10 +123,50 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ½ÂÀÚ °áÁ¤
+    private Player FindWinner()
+    {
+        // ê°€ì¥ ë†’ì€ ì ìˆ˜ë¥¼ ê°€ì§„ í”Œë ˆì´ì–´ë¥¼ ìŠ¹ìë¡œ ê²°ì •
+        Player winner = null;
+        int highestScore = 0;
+        foreach (Player player in players)
+        {
+            if (!player.hasPassed && player.score > highestScore)
+            {
+                winner = player;
+                highestScore = player.score;
+            }
+        }
+        return winner;
+    }
+    
+    // ìŠ¹ì ê²°ì •
     private void DeclareWinner(Player winner)
     {
+        isGameActive = false;
         Debug.Log("The winner is Player " + winner.playerID + " with a score of " + winner.score);
-        // °ÔÀÓ Á¾·á UI ¾÷µ¥ÀÌÆ® ·ÎÁ÷ Ãß°¡ °¡´É
+        UpdateUIForWinner(winner);
+        DisableGameplayElements();
+        EndGame();
+    }
+
+    private void UpdateUIForWinner(Player winner)
+    {
+        // ìŠ¹ì ì •ë³´ ì—…ë°ì´íŠ¸
+        uiManager.DisplayWinner($"Winner: Player {winner.playerID} Score: {winner.score}");
+    }
+
+    private void DisableGameplayElements()
+    {
+        // ê²Œì„ í”Œë ˆì´ ê´€ë ¨ UI ìš”ì†Œ ë¹„í™œì„±í™”
+        uiManager.SetButtonsInteractable(false);
+    }
+
+    private void EndGame()
+    {
+        #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+        #else
+        Application.Quit();
+        #endif
     }
 }

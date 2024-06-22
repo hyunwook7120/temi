@@ -2,51 +2,44 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public int value; // Ä«µåÀÇ °ª
+     public int value; // ì¹´ë“œì˜ ê°’
+     public string suit; // ì¹´ë“œì˜ ìŠˆíŠ¸(ì¢…ë¥˜)
 
-    private SpriteRenderer spriteRenderer;
+     // ì¹´ë“œ ì´ˆê¸°í™” ë©”ì„œë“œ
+     public void Initialize(int cardValue, string cardSuit)
+     {
+         value = cardValue;
+         suit = cardSuit;
+         UpdateCardSprite();
+     }
 
-    private void Awake()
+     // ì¹´ë“œ ìŠ¤í”„ë¼ì´íŠ¸ ì—…ë°ì´íŠ¸ ë©”ì„œë“œ
+     private void UpdateCardSprite()
     {
-        // ½ºÇÁ¶óÀÌÆ® ·»´õ·¯ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿É´Ï´Ù.
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
-        // ½ºÇÁ¶óÀÌÆ® ·»´õ·¯°¡ ¾øÀ¸¸é ¿¡·¯ ·Î±×¸¦ Ãâ·ÂÇÕ´Ï´Ù.
-        if (spriteRenderer == null)
+        GameObject cardPrefab = CardManager.Instance.GetCardPrefab(value);
+        if (cardPrefab != null)
         {
-            Debug.LogError("SpriteRenderer component is missing on " + gameObject.name);
-        }
-    }
-
-    // Ä«µå ÃÊ±âÈ­ ¸Ş¼­µå
-    public void Initialize(int cardValue)
-    {
-        value = cardValue;
-        UpdateCardSprite();
-    }
-
-    // Ä«µå ½ºÇÁ¶óÀÌÆ® ¾÷µ¥ÀÌÆ® ¸Ş¼­µå
-    private void UpdateCardSprite()
-    {
-        if (spriteRenderer != null)
-        {
-            GameObject cardPrefab = CardManager.Instance.GetCardPrefab(value);
-            if (cardPrefab != null)
+            SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+            if (spriteRenderer == null)
             {
-                SpriteRenderer cardSpriteRenderer = cardPrefab.GetComponent<SpriteRenderer>();
-                if (cardSpriteRenderer != null)
-                {
-                    spriteRenderer.sprite = cardSpriteRenderer.sprite;
-                }
-                else
-                {
-                    Debug.LogError("SpriteRenderer is missing on the card prefab: " + cardPrefab.name);
-                }
+                Debug.LogError("SpriteRenderer component is missing on the card.");
+                return;
+            }
+        
+            SpriteRenderer prefabSpriteRenderer = cardPrefab.GetComponent<SpriteRenderer>();
+            if (prefabSpriteRenderer != null)
+            {
+                spriteRenderer.sprite = prefabSpriteRenderer.sprite;
             }
             else
             {
-                Debug.LogError("Card prefab not found for value: " + value);
+                Debug.LogError("SpriteRenderer component is missing on the prefab.");
             }
+        }
+        else
+        {
+            Debug.LogError("Card prefab not found for value: " + value + ", suit: " + suit);
         }
     }
 }
+

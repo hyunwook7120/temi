@@ -1,39 +1,77 @@
 using UnityEngine;
-using UnityEngine.UI; // Button°ú Image¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¿ä
-using TMPro; // TextMeshProUGUI¸¦ »ç¿ëÇÏ±â À§ÇØ ÇÊ¿ä
+using UnityEngine.UI; // Buttonê³¼ Imageë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìš”
+using TMPro; // TextMeshProUGUIë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ í•„ìš”
 using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour
 {
-    public Image[] playerCards; // °¢ ÇÃ·¹ÀÌ¾îÀÇ Ä«µå Image ¹è¿­
-    public TextMeshProUGUI[] playerScores; // °¢ ÇÃ·¹ÀÌ¾îÀÇ Á¡¼ö TextMeshProUGUI ¹è¿­
+    public Image[] playerCards; // ê° í”Œë ˆì´ì–´ì˜ ì¹´ë“œ Image ë°°ì—´
+    public TextMeshProUGUI[] playerScores; // ê° í”Œë ˆì´ì–´ì˜ ì ìˆ˜ TextMeshProUGUI ë°°ì—´
+    public TextMeshProUGUI winnerText; // ìŠ¹ìë¥¼ í‘œì‹œí•˜ëŠ” í…ìŠ¤íŠ¸ í•„ë“œ
     public Button betButton;
     public Button passButton;
 
-    // ÇÃ·¹ÀÌ¾î Ä«µå UI ¾÷µ¥ÀÌÆ®
+     // ê²Œì„ ì‹œì‘ ì‹œ UI ì´ˆê¸°í™”
+    public void InitializeGameUI()
+    {
+        SetButtonsInteractable(true);
+        if (winnerText != null)
+            winnerText.text = ""; // ìŠ¹ì í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
+    }
+
+    // í”Œë ˆì´ì–´ ì¹´ë“œ UI ì—…ë°ì´íŠ¸
     public void UpdatePlayerCardUI(int playerID, Card card)
     {
         if (playerID < playerCards.Length && playerCards[playerID] != null)
         {
-            playerCards[playerID].sprite = card.GetComponent<SpriteRenderer>().sprite;
+            SpriteRenderer spriteRenderer = card.GetComponent<SpriteRenderer>();
+            if (spriteRenderer != null)
+            {
+                playerCards[playerID].sprite = spriteRenderer.sprite;
+            }
+            else
+            {
+                Debug.LogError("Card does not have a SpriteRenderer component.");
+            }
+        }
+        else
+        {
+            Debug.LogError("Invalid playerID or playerCard is null.");
         }
     }
 
-    // Á¡¼ö UI ¾÷µ¥ÀÌÆ®
+    // ì ìˆ˜ UI ì—…ë°ì´íŠ¸
     public void UpdateScoreUI(int playerID, int score)
     {
         if (playerID < playerScores.Length && playerScores[playerID] != null)
         {
             playerScores[playerID].text = "Score: " + score;
         }
+        else
+        {
+            Debug.LogError("Invalid playerID or playerScore is null.");
+        }
     }
-
-    // º£ÆÃ ¹× ÆĞ½º ¹öÆ° ¼³Á¤
+    // ìŠ¹ì í‘œì‹œ
+    public void DisplayWinner(string winnerMessage)
+    {
+        if (winnerText != null)
+            winnerText.text = winnerMessage;
+    }
+    
+    // ë² íŒ… ë° íŒ¨ìŠ¤ ë²„íŠ¼ ì„¤ì •
     public void SetButtonCallbacks(UnityAction betAction, UnityAction passAction)
     {
         betButton.onClick.RemoveAllListeners();
         passButton.onClick.RemoveAllListeners();
         betButton.onClick.AddListener(betAction);
         passButton.onClick.AddListener(passAction);
+    }
+
+    // ë²„íŠ¼ í™œì„±í™”/ë¹„í™œì„±í™” ì„¤ì •
+    public void SetButtonsInteractable(bool interactable)
+    {
+        betButton.interactable = interactable;
+        passButton.interactable = interactable;
     }
 }

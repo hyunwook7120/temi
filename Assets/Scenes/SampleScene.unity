@@ -315,6 +315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 7
+  suit: 
 --- !u!212 &208953302
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -424,6 +425,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 8
+  suit: 
 --- !u!212 &323081569
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1179,6 +1181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 1
+  suit: 
 --- !u!212 &713701226
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1384,6 +1387,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 10
+  suit: 
 --- !u!212 &1021249140
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1566,6 +1570,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 5
+  suit: 
 --- !u!212 &1100357434
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1664,6 +1669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 6
+  suit: 
 --- !u!212 &1222386880
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1762,6 +1768,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 9
+  suit: 
 --- !u!212 &1296601454
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1860,6 +1867,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 2
+  suit: 
 --- !u!212 &1536462079
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1958,6 +1966,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 4
+  suit: 
 --- !u!212 &1558233466
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2557,6 +2566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 3
+  suit: 
 --- !u!212 &1925496785
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2919,7 +2929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1582222446701303190, guid: 162ec2a9f30fd9845a76c423eaf3dce0, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 78.1001
+      value: 104
       objectReference: {fileID: 0}
     - target: {fileID: 1582222446701303190, guid: 162ec2a9f30fd9845a76c423eaf3dce0, type: 3}
       propertyPath: m_AnchoredPosition.y
