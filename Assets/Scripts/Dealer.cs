@@ -35,9 +35,15 @@ public class Dealer : MonoBehaviour
             Debug.LogError("Error initializing the deck: " + ex.Message);
         }
     }
+<<<<<<< HEAD
     
     // 덱 셔플 메서드
     public void ShuffleDeck()
+=======
+
+    // 덱 셔플 메서드
+    private void ShuffleDeck()
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
     {
         for (int i = deck.Count - 1; i > 0; i--)
         {

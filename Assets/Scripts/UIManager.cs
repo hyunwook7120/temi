@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     public Image[] playerCards; // 각 플레이어의 카드 Image 배열
     public TextMeshProUGUI[] playerScores; // 각 플레이어의 점수 TextMeshProUGUI 배열
+<<<<<<< HEAD
     public TextMeshProUGUI winnerText; // 승자를 표시하는 텍스트 필드
     public Button betButton;
     public Button passButton;
@@ -19,6 +20,11 @@ public class UIManager : MonoBehaviour
             winnerText.text = ""; // 승자 텍스트 초기화
     }
 
+=======
+    public Button betButton;
+    public Button passButton;
+
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
     // 플레이어 카드 UI 업데이트
     public void UpdatePlayerCardUI(int playerID, Card card)
     {
@@ -52,6 +58,7 @@ public class UIManager : MonoBehaviour
             Debug.LogError("Invalid playerID or playerScore is null.");
         }
     }
+<<<<<<< HEAD
     // 승자 표시
     public void DisplayWinner(string winnerMessage)
     {
@@ -59,6 +66,9 @@ public class UIManager : MonoBehaviour
             winnerText.text = winnerMessage;
     }
     
+=======
+
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
     // 베팅 및 패스 버튼 설정
     public void SetButtonCallbacks(UnityAction betAction, UnityAction passAction)
     {
@@ -67,6 +77,7 @@ public class UIManager : MonoBehaviour
         betButton.onClick.AddListener(betAction);
         passButton.onClick.AddListener(passAction);
     }
+<<<<<<< HEAD
 
     // 버튼 활성화/비활성화 설정
     public void SetButtonsInteractable(bool interactable)
@@ -75,3 +86,6 @@ public class UIManager : MonoBehaviour
         passButton.interactable = interactable;
     }
 }
+=======
+}
+>>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
