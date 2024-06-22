@@ -4,28 +4,65 @@ public class CardManager : MonoBehaviour
 {
     public static CardManager Instance { get; private set; }
 
-    public GameObject[] cardPrefabs; // ¸ğµç Ä«µå ÇÁ¸®ÆÕÀ» ¹è¿­·Î ÀúÀå (1ºÎÅÍ 10±îÁö)
+    public GameObject[] cardPrefabs; // ëª¨ë“  ì¹´ë“œ í”„ë¦¬íŒ¹ì„ ë°°ì—´ë¡œ ì €ì¥ (1ë¶€í„° 10ê¹Œì§€)
 
     private void Awake()
     {
-        // ½Ì±ÛÅæ ÆĞÅÏ Àû¿ë
+        // ì‹±ê¸€í†¤ íŒ¨í„´ ì ìš©
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾À ÀüÈ¯ ½Ã ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            Debug.Log("CardManager instance created.");
         }
         else
         {
-            Destroy(gameObject); // Áßº¹µÈ ÀÎ½ºÅÏ½º ÆÄ±«
+            Debug.LogError("Duplicate CardManager instance detected!");
+            Destroy(gameObject); // ì¤‘ë³µëœ ì¸ìŠ¤í„´ìŠ¤ íŒŒê´´
         }
     }
 
-    // Ä«µå ÇÁ¸®ÆÕÀ» Ã£´Â ¸Ş¼­µå
+    // ì¹´ë“œ í”„ë¦¬íŒ¹ì„ ì°¾ëŠ” ë©”ì„œë“œ
     public GameObject GetCardPrefab(int value)
     {
-        if (value >= 1 && value <= cardPrefabs.Length)
+    foreach (GameObject cardPrefab in cardPrefabs)
+    {
+        Card card = cardPrefab.GetComponent<Card>();
+        if (card != null && card.value == value)
         {
-            return cardPrefabs[value - 1];
+            return cardPrefab;
+        }
+    }
+    return null;
+    }
+
+    // ë± ì´ˆê¸°í™”
+    public void InitializeDeck()
+    {
+        // ì¹´ë“œ ë± ì´ˆê¸°í™” ë¡œì§
+    }
+
+    // ì¹´ë“œë¥¼ ì„ëŠ” ë©”ì„œë“œ
+    public void ShuffleDeck()
+    {
+        for (int i = 0; i < cardPrefabs.Length; i++)
+        {
+            GameObject temp = cardPrefabs[i];
+            int randomIndex = Random.Range(0, cardPrefabs.Length);
+            cardPrefabs[i] = cardPrefabs[randomIndex];
+            cardPrefabs[randomIndex] = temp;
+        }
+    }
+
+    // ì¹´ë“œë¥¼ ë‚˜ëˆ„ëŠ” ë©”ì„œë“œ
+    public GameObject DealCard()
+    {
+        foreach (GameObject cardPrefab in cardPrefabs)
+        {
+            if (!cardPrefab.activeInHierarchy)
+            {
+                cardPrefab.SetActive(true);
+                return cardPrefab;
+            }
         }
         return null;
     }
