@@ -45,3 +45,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCards: []
+  playerAllChips:
+  - {fileID: 0}
+  - {fileID: 0}
+  playerBettingChips: []
+  winnerText: {fileID: 0}
+  betButton: {fileID: 0}
+  dieButton: {fileID: 0}
+  callButton: {fileID: 0}
+  betPlusOneButton: {fileID: 0}
+  betDoubleButton: {fileID: 0}
+  allInButton: {fileID: 0}
