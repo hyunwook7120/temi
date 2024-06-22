@@ -12,18 +12,11 @@ public class CardManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-<<<<<<< HEAD
             Debug.Log("CardManager instance created.");
         }
         else
         {
             Debug.LogError("Duplicate CardManager instance detected!");
-=======
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
-        }
-        else
-        {
->>>>>>> 3ca0060983a34c3b490d493cab5031f5e75f70a8
             Destroy(gameObject); // 중복된 인스턴스 파괴
         }
     }
