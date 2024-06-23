@@ -48,7 +48,11 @@ public class Dealer : MonoBehaviour
         }
     }
 
+<<<<<<< HEAD
     // 카드 배분 메서드
+=======
+     // 카드 배분 메서드
+>>>>>>> 9fe68ebbed408a3a0a0815758d9b01dbd2bf961f
     public Card DealCard()
     {
         if (deck.Count == 0)
@@ -73,4 +77,9 @@ public class Dealer : MonoBehaviour
 
         return dealtCard;
     }
+<<<<<<< HEAD
 }
+=======
+
+}
+>>>>>>> 9fe68ebbed408a3a0a0815758d9b01dbd2bf961f
