@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     {
         playerID = id;
         bettingChips = 1; // 기본 베팅칩 1로 설정
-        allChips = 10; // 모든 칩을 10으로 초기화
+        allChips = 100; // 모든 칩을 10으로 초기화
         hasPassed = false;
     }
 

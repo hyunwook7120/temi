@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     private int currentBet; // 현재 베팅
     private bool isGameActive; // 게임 활성 상태
     private int betPlusOneCount = 0; // BetPlusOne 횟수 카운트
-    private const int maxBetPlusOneCount = 2; // BetPlusOne 최대 횟수
 
     void Start()
     {
@@ -60,8 +59,7 @@ public class GameManager : MonoBehaviour
     public void Bet(int playerID)
     {
         if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
-        currentBet = 1;
-        players[playerID].bettingChips = currentBet;
+        players[playerID].bettingChips += currentBet;
         uiManager.UpdatePlayerBettingChipsUI(playerID, players[playerID].bettingChips);
         // 베팅 버튼 토글
         uiManager.ToggleBetButtons(true);
@@ -73,7 +71,7 @@ public class GameManager : MonoBehaviour
     {
         if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
         DetermineRoundWinner();
-        NextTurn();
+        EndTurn();
     }
 
     // 패스
@@ -95,34 +93,47 @@ public class GameManager : MonoBehaviour
             }
         }
         DetermineRoundWinner();
-        NextTurn();
+        EndTurn();
     }
 
     // 베팅 +1
     public void BetPlusOne(int playerID)
     {
-        if (!isGameActive || betPlusOneCount >= maxBetPlusOneCount || playerID < 0 || playerID >= players.Length) return;
-        currentBet++;
-        betPlusOneCount++;
-        players[playerID].bettingChips = currentBet;
-        players[playerID].allChips -= 1;
+        if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
+        int additionalBet = 1;  // 추가로 베팅할 금액
+        if (players[playerID].allChips < additionalBet) {
+            Debug.LogError("Not enough chips to make a bet.");
+            return;
+        }
+
+        currentBet += additionalBet;  // 현재 베팅 금액 업데이트
+        players[playerID].bettingChips += additionalBet;  // 실제 베팅된 칩 업데이트
+        players[playerID].allChips -= additionalBet;  // 플레이어의 칩에서 차감
+
         uiManager.UpdatePlayerAllChipsUI(playerID, players[playerID].allChips);
         uiManager.UpdatePlayerBettingChipsUI(playerID, players[playerID].bettingChips);
         CheckGameEnd();
         if (isGameActive)
         {
-            // 기본 액션 버튼으로 돌아가기
             uiManager.ToggleBetButtons(false);
             uiManager.ToggleActionButtons(true);
         }
+        NextTurn();
     }
+
 
     // 베팅 더블
     public void BetDouble(int playerID)
-    {
+    {   
+        int doubleBet = currentBet * 2;
+        if (!isGameActive || playerID < 0 || playerID >= players.Length || players[playerID].allChips < doubleBet) {
+            Debug.LogError("Not enough chips to double the bet.");
+            return;
+        }
+
         if (!isGameActive || playerID < 0 || playerID >= players.Length || players[playerID].allChips < currentBet * 2) return;
         currentBet *= 2;
-        players[playerID].bettingChips = currentBet;
+        players[playerID].bettingChips += currentBet;
         players[playerID].allChips -= currentBet / 2; // 이전 베팅값을 빼줌
         uiManager.UpdatePlayerAllChipsUI(playerID, players[playerID].allChips);
         uiManager.UpdatePlayerBettingChipsUI(playerID, players[playerID].bettingChips);
@@ -133,14 +144,19 @@ public class GameManager : MonoBehaviour
             uiManager.ToggleBetButtons(false);
             uiManager.ToggleActionButtons(true);
         }
+        NextTurn();
     }
 
     // 올인
     public void AllIn(int playerID)
-    {
+    {   
+        if (!isGameActive || playerID < 0 || playerID >= players.Length) {
+            return;
+        }
+
         if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
         currentBet = players[playerID].allChips;
-        players[playerID].bettingChips = currentBet;
+        players[playerID].bettingChips += currentBet;
         players[playerID].allChips = 0;
         uiManager.UpdatePlayerAllChipsUI(playerID, players[playerID].allChips);
         uiManager.UpdatePlayerBettingChipsUI(playerID, players[playerID].bettingChips);
@@ -151,8 +167,22 @@ public class GameManager : MonoBehaviour
             uiManager.ToggleBetButtons(false);
             uiManager.ToggleActionButtons(true);
         }
+        NextTurn();
     }
 
+    // 턴 종료 및 게임 상태 초기화
+    private void EndTurn()
+    {
+        NextTurn(); // 다음 턴으로 진행
+    }
+
+    // 베팅 옵션 초기화
+    private void ResetBetOptions()
+    {
+        currentBet = 1; // 기본 베팅값으로 리셋
+        betPlusOneCount = 0; // BetPlusOne 사용 횟수 리셋
+    }
+    
     // 라운드 승자 결정
     private void DetermineRoundWinner()
     {
@@ -162,14 +192,16 @@ public class GameManager : MonoBehaviour
         if (player1.card.value > player2.card.value)
         {
             player1.allChips += player1.bettingChips + player2.bettingChips;
+            player2.allChips -= player2.bettingChips;
         }
         else if (player2.card.value > player1.card.value)
         {
             player2.allChips += player1.bettingChips + player2.bettingChips;
+            player1.allChips -= player1.bettingChips;
         }
 
-        player1.bettingChips = 0;
-        player2.bettingChips = 0;
+        //player1.bettingChips = 0;
+        //player2.bettingChips = 0;
 
         uiManager.UpdatePlayerAllChipsUI(0, player1.allChips);
         uiManager.UpdatePlayerAllChipsUI(1, player2.allChips);
@@ -202,8 +234,6 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            // 기본 베팅 칩 초기화
-            currentBet = 1;
             SetPlayerTurn();
         }
     }

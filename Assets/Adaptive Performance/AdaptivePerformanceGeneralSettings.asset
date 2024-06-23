@@ -12,8 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: Standalone Settings
   m_EditorClassIdentifier: Unity.AdaptivePerformance:UnityEngine.AdaptivePerformance:AdaptivePerformanceGeneralSettings
-  m_LoaderManagerInstance: {fileID: 7319412634632990002}
+  m_LoaderManagerInstance: {fileID: -6039298976761973039}
   m_InitManagerOnStart: 1
+--- !u!114 &-6039298976761973039
+MonoBehaviour:
+  m_ObjectHideFlags: 2
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 536372c49e1ca914d822849d36de938c, type: 3}
+  m_Name: Standalone Providers
+  m_EditorClassIdentifier: 
+  m_AutomaticLoading: 0
+  m_AutomaticRunning: 0
+  m_Loaders:
+  - {fileID: 11400000, guid: 65f8d59359df05e468a225b59f698164, type: 2}
 --- !u!114 &-1159768548472418532
 MonoBehaviour:
   m_ObjectHideFlags: 2
