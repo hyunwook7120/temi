@@ -59,8 +59,8 @@ public class GameManager : MonoBehaviour
     public void Bet(int playerID)
     {
         if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
-        players[playerID].bettingChips += currentBet;
-        uiManager.UpdatePlayerBettingChipsUI(playerID, players[playerID].bettingChips);
+        uiManager.UpdatePlayerBettingChipsUI(playerID, players[0].bettingChips);
+        uiManager.UpdatePlayerBettingChipsUI(playerID, players[1].bettingChips);
         // 베팅 버튼 토글
         uiManager.ToggleBetButtons(true);
         uiManager.ToggleActionButtons(false);
@@ -77,22 +77,20 @@ public class GameManager : MonoBehaviour
     // 패스
     public void Die(int playerID)
     {
-        if (!isGameActive || playerID < 0 || playerID >= players.Length) return;
-        players[playerID].Pass();
-        foreach (Player player in players)
+        Player player1 = players[0];
+        Player player2 = players[1];
+
+        if (playerID == 1)
         {
-            Card newCard = dealer.DealCard();
-            if (newCard != null)
-            {
-                player.SetCard(newCard);
-                uiManager.UpdatePlayerCardUI(player.playerID, newCard);
-            }
-            else
-            {
-                Debug.LogError("No more cards to deal.");
-            }
+            player1.allChips += player1.bettingChips + player2.bettingChips;
+            player2.allChips -= player2.bettingChips;
         }
-        DetermineRoundWinner();
+        else if (playerID == 0)
+        {
+            player2.allChips += player1.bettingChips + player2.bettingChips;
+            player1.allChips -= player1.bettingChips;
+        }
+
         EndTurn();
     }
 
@@ -173,14 +171,8 @@ public class GameManager : MonoBehaviour
     // 턴 종료 및 게임 상태 초기화
     private void EndTurn()
     {
+        SetPlayerTurn();
         NextTurn(); // 다음 턴으로 진행
-    }
-
-    // 베팅 옵션 초기화
-    private void ResetBetOptions()
-    {
-        currentBet = 1; // 기본 베팅값으로 리셋
-        betPlusOneCount = 0; // BetPlusOne 사용 횟수 리셋
     }
     
     // 라운드 승자 결정
@@ -200,8 +192,8 @@ public class GameManager : MonoBehaviour
             player1.allChips -= player1.bettingChips;
         }
 
-        //player1.bettingChips = 0;
-        //player2.bettingChips = 0;
+        player1.bettingChips = 0;
+        player2.bettingChips = 0;
 
         uiManager.UpdatePlayerAllChipsUI(0, player1.allChips);
         uiManager.UpdatePlayerAllChipsUI(1, player2.allChips);
