@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id">
+  <string name="gcm_defaultSenderId" translatable="false">1076926161260</string>
+  <string name="google_storage_bucket" translatable="false">poker-bigwheel.appspot.com</string>
+  <string name="project_id" translatable="false">poker-bigwheel</string>
+  <string name="google_api_key" translatable="false">AIzaSyB4Cpm2oRwPCmgyI_nvo7EuIgKgg2Zb6So</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyB4Cpm2oRwPCmgyI_nvo7EuIgKgg2Zb6So</string>
+  <string name="google_app_id" translatable="false">1:1076926161260:android:faab33a7ce555868635349</string>
+</resources>

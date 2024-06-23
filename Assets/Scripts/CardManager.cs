@@ -12,7 +12,6 @@ public class CardManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
             Debug.Log("CardManager instance created.");
         }
         else
@@ -25,15 +24,15 @@ public class CardManager : MonoBehaviour
     // 카드 프리팹을 찾는 메서드
     public GameObject GetCardPrefab(int value)
     {
-        foreach (GameObject cardPrefab in cardPrefabs)
+    foreach (GameObject cardPrefab in cardPrefabs)
+    {
+        Card card = cardPrefab.GetComponent<Card>();
+        if (card != null && card.value == value)
         {
-            Card card = cardPrefab.GetComponent<Card>();
-            if (card != null && card.value == value)
-            {
-                return cardPrefab;
-            }
+            return cardPrefab;
         }
-        return null;
+    }
+    return null;
     }
 
     // 덱 초기화
