@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1076926161260",
+    "project_id": "poker-bigwheel",
+    "storage_bucket": "poker-bigwheel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1076926161260:android:faab33a7ce555868635349",
+        "android_client_info": {
+          "package_name": "com.temi.poker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Cpm2oRwPCmgyI_nvo7EuIgKgg2Zb6So"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
